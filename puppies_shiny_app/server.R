@@ -108,4 +108,16 @@ server <- function(input, output){
                filter(price >= input$price_select[1] & price <= input$price_select)
           ggplot(data = puppy_breed, aes(x=breed, fill = as.factor(color))) + geom_bar()
      })
+     output$puppy_listing_table <- renderDataTable({
+          puppy_breed <- puppy_listings %>% 
+               filter(str_replace_all(breed, "_", " ") == input$puppy_list_breed_select) %>% 
+               filter(gender == input$puppy_gender_select) %>% 
+               filter(dad_weight >= input$dad_weight_select[1] & dad_weight <= input$dad_weight_select[2]) %>% 
+               filter(mom_weight >= input$mom_weight_select[1] & mom_weight <= input$mom_weight_select[2]) %>% 
+               filter(price >= input$price_select[1] & price <= input$price_select) %>% 
+               rowwise() %>% 
+               mutate(link = paste0("<a href='", "https://www.puppyspot.com/puppies/view/", puppy_id, "/", "'>", puppy_id, "</a>")) %>% 
+               ungroup() %>% 
+               select(name, breed, gender, dad_weight, mom_weight, price, link)
+     }, searchDelay = 0, escape = F)
 }

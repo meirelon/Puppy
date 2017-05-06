@@ -32,7 +32,8 @@ ui <- fluidPage(
                         sliderInput("mom_weight_select", "Select Mothers Weight Range", value = c(3, 175), min = 3, max = 175, step = 1),
                         sliderInput("dad_weight_select", "select Fathers Weight Range", value = c(2, 190), min = 2, max = 190, step = 1),
                         selectInput("puppy_gender_select", "Choose Gender", c("Male", "Female")),
-                        plotOutput("puppy_name_bar_chart")
+                        plotOutput("puppy_name_bar_chart"),
+                        dataTableOutput("puppy_listing_table")
                )
           )
      )
